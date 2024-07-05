@@ -8,12 +8,12 @@ workflows:
       - name: CICD Started
         script: echo "Welcome to your CICD set up"
       
-      -name: Install dependencies cocoapods
+      - name: Install dependencies cocoapods
         script: gem install cocoapods  # Instala CocoaPods si no está instalado
 
-      -name: Install dependencies -repo-update
+      - name: Install dependencies -repo-update
         script: pod install --repo-update  # Instala las dependencias de CocoaPods
-        
+
       - name: Build test
         script: xcodebuild build -workspace QRC.xcworkspace -scheme QRC CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
     
