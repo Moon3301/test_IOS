@@ -8,7 +8,7 @@ workflows:
       - name: CICD Started
         script: echo "Welcome to your CICD set up"
       - name: Build test
-        script: |
+        script: 
           
           - gem install cocoapods  # Instala CocoaPods si no está instalado
           - pod install --repo-update  # Instala las dependencias de CocoaPods
