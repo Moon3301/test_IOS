@@ -18,7 +18,7 @@ workflows:
         script: xcodebuild build -workspace QRC.xcworkspace -scheme QRC CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
     
     artifacts:
-      - "QRC/build/**/*"  # Ajusta según la estructura de tu proyecto
+      - "QRC/**/*"  # Ajusta según la estructura de tu proyecto
 
     publishing:
       email:
