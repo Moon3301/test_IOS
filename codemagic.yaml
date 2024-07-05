@@ -1,0 +1,31 @@
+workflows:
+  my-workflow:
+    name: Build and Test
+    instance_type: mac_mini
+    max_build_duration: 60
+
+    environment:
+      vars:
+        RUBY_VERSION: "2.7.3"  # Versión de Ruby que necesitas
+        BUNDLE_PATH: "vendor/bundle"  # Ruta para las gemas de Ruby
+        BUNDLE_BIN: "$BUNDLE_PATH/bin"  # Ruta para los ejecutables de gemas
+
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+        - vendor/bundle  # Cache para las gemas de Ruby
+
+    scripts:
+      - gem install bundler  # Instalar Bundler si no está presente
+      - bundle install --path $BUNDLE_PATH --binstubs $BUNDLE_BIN  # Instalar gemas usando Bundler
+      - bundle exec rake spec  # Ejecutar pruebas de Ruby (reemplaza con tu comando específico)
+
+    artifacts:
+      - "**/*.apk"  # Ejemplo de artefactos a almacenar, ajusta según tu proyecto
+
+    publishing:
+      email:
+        recipients:
+          - name@example.com
+      scripts:
+        - echo "Publishing artifacts..."  # Script post-publicación opcional
