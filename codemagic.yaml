@@ -8,7 +8,7 @@ workflows:
       - name: CICD Started
         script: echo "Welcome to your CICD set up"
       - name: Build test
-        script: - xcodebuild build -workspace QRC.xcworkspace -scheme QRC CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+        script: xcodebuild build -workspace QRC.xcworkspace -scheme QRC CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
     
     artifacts:
       - "QRC/build/**/*"  # Ajusta según la estructura de tu proyecto
