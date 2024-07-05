@@ -1,20 +1,9 @@
 workflows:
-  build_and_deploy:
-    name: Build and Deploy
+  my-workflow:
+    name: Build and Test
     instance_type: mac_mini_m1
     max_build_duration: 60
-    environment:
-      vars:
-        APP_STORE_CONNECT_PRIVATE_KEY: |
-          -----BEGIN PRIVATE KEY-----
-          MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgOIJKCfYpUKe3Kn6j
-          DWTxU3FcTDH6aufRd6awYqdecOCgCgYIKoZIzj0DAQehRANCAASgNnJXjoQDmlk7
-          nmhW5QF4I8PfZCJNd7R42SANnmkihhtc0sRvKcn1JPLBNdmCjVTQnvGPnfbdDwyK
-          8etqB7wK
-          -----END PRIVATE KEY-----
-        APP_STORE_CONNECT_KEY_IDENTIFIER: ZGJA9QBY56
-        APP_STORE_CONNECT_ISSUER_ID: 673379e4-84b0-4eb1-8f27-4818e7e52f36
-        APPLE_ID: app@acdata.cl
+
     scripts:
       - name: CICD Started
         script: echo "Welcome to your CICD set up"
@@ -25,24 +14,16 @@ workflows:
       - name: Install dependencies -repo-update
         script: pod install --repo-update  # Instala las dependencias de CocoaPods
 
-      - name: Build
+      - name: Build test
         script: xcodebuild build -workspace QRC.xcworkspace -scheme QRC CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
-
-      - name: Archive
-        script: xcodebuild archive -workspace QRC.xcworkspace -scheme QRC -archivePath $HOME/build/QRC.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
-
-      - name: Export Archive
-        script: xcodebuild -exportArchive -archivePath $HOME/build/QRC.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $HOME/build
     
-      - name: Upload to App Store Connect
-        script: |
-          xcrun altool --upload-app --type ios --file $HOME/build/QRC.ipa --apiKey $APP_STORE_CONNECT_KEY_IDENTIFIER --apiIssuer $APP_STORE_CONNECT_ISSUER_ID --apiKeyFile $APP_STORE_CONNECT_PRIVATE_KEY
-
     artifacts:
-      - "$HOME/build/*.ipa"  # Ajusta según la estructura de tu proyecto
+      - "QRC/build/**/*"  # Ajusta según la estructura de tu proyecto
 
     publishing:
       email:
         recipients:
           - name@example.com
-
+      
+      scripts:
+        - echo "Publishing artifacts..."  # Script post-publicación opcional
