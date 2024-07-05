@@ -4,27 +4,12 @@ workflows:
     instance_type: mac_mini_m1
     max_build_duration: 60
 
-    environment:
-      vars:
-        RUBY_VERSION: "2.7.3"  # Versión de Ruby que necesitas
-        BUNDLE_PATH: "vendor/bundle"  # Ruta para las gemas de Ruby
-        BUNDLE_BIN: "$BUNDLE_PATH/bin"  # Ruta para los ejecutables de gemas
-
-    cache:
-      cache_paths:
-        - ~/.pub-cache
-        - vendor/bundle  # Cache para las gemas de Ruby
-
     scripts:
-        - ls -l  # Listar archivos y directorios para verificar la presencia de Gemfile
-        - gem install bundler  # Instalar Bundler si no está presente
-        - bundle config set path 'vendor/bundle'  # Configurar la ruta de las gemas
-        - bundle install  # Instalar gemas usando Bundler
-        - bundle binstubs --all  # Generar binstubs para todas las gemas instaladas
-        - bundle exec rake spec  # Ejecutar pruebas de Ruby (ajustar según sea necesario)
+      - set -eo pipefail  # Asegura la terminación del script en caso de error
+      - xcodebuild clean build -project QRC.xcodeproj -scheme QRC -destination 'platform=iOS Simulator,name=iPhone 13,OS=15.3'  # Ejemplo de comando para compilar en Xcode
 
     artifacts:
-      - "**/*.apk"  # Ejemplo de artefactos a almacenar, ajusta según tu proyecto
+      - build/**/outputs/*.ipa  # Ejemplo de artefactos a almacenar, ajusta según tu proyecto
 
     publishing:
       email:
