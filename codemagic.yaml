@@ -16,9 +16,12 @@ workflows:
         - vendor/bundle  # Cache para las gemas de Ruby
 
     scripts:
-      - gem install bundler  # Instalar Bundler si no está presente
-      - bundle install --path $BUNDLE_PATH --binstubs $BUNDLE_BIN  # Instalar gemas usando Bundler
-      - bundle exec rake spec  # Ejecutar pruebas de Ruby (reemplaza con tu comando específico)
+        - ls -l  # Listar archivos y directorios para verificar la presencia de Gemfile
+        - gem install bundler  # Instalar Bundler si no está presente
+        - bundle config set path 'vendor/bundle'  # Configurar la ruta de las gemas
+        - bundle install  # Instalar gemas usando Bundler
+        - bundle binstubs --all  # Generar binstubs para todas las gemas instaladas
+        - bundle exec rake spec  # Ejecutar pruebas de Ruby (ajustar según sea necesario)
 
     artifacts:
       - "**/*.apk"  # Ejemplo de artefactos a almacenar, ajusta según tu proyecto
