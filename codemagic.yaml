@@ -9,8 +9,6 @@ workflows:
         script: echo "Welcome to your CICD set up"
       - name: Build test
         script: 
-          - gem install cocoapods  # Instala CocoaPods si no está instalado
-          - pod install --repo-update  # Instala las dependencias de CocoaPods
           - xcodebuild build -workspace QRC.xcworkspace -scheme QRC CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
     
     artifacts:
